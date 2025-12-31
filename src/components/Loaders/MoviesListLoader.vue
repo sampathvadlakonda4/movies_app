@@ -4,7 +4,10 @@ const numberOfCards = ref(2);
 const numberOfGenres = ref(2);
 function setNumberOfCardsAndGenres() {
     numberOfGenres.value = Math.floor((window.innerHeight - 100) / 300) || 1;
-    numberOfCards.value = Math.floor((window.innerWidth - 100) / 150) || 1;
+    numberOfCards.value = Math.floor((window.innerWidth - 50 + 40) / (150 + 20)) || 1;  // 50 - padding, 
+    // 40 - first and last card gap, 
+    // 150 - width of the card,
+    // 20 - gap between each card;
 }
 setNumberOfCardsAndGenres();
 onMounted(() => {

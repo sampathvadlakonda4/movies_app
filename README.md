@@ -1,5 +1,5 @@
 # Frontend Technologies
-1) Node JS - (version - 22.20.0)
+1) Node JS with npm - (version - 22.20.0)
 2) Vue JS- frontend framework.
 3) Vue-router - for routing.
 4) Pinia - to store the data.
@@ -15,14 +15,14 @@
 4) Start the development server ( npm run dev ).
 
 # Features
-1) Responsive SPA movies application.
+1) Responsive single page movies application.
 2) Movie search functionality that allows users to search movies by name.
 3) Theme Support with two modes - dark and light. default is dark.
 4) Dynamic skeleton loader.
 5) User friendly - displayed proper prompts where required.
 6) Handled api calls effectively.
 7) Data persisting.
-8) Eslint with husky to check staged files only to maintain code quality.
+8) Eslint with husky & lint-staged to check staged files only to maintain code quality.
 
 # Tested - Unit Test Cases
 1) On first load of the application, redirected to dashboard page, a skeleton loader is displayed while data is fetching from 'https://api.tvmaze.com/shows' (get-api). Fetched the data only once, then stored it in the pinia and persisted for future use. if data already exists in pinia store then not fetching the data again from api.
