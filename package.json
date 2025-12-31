@@ -25,6 +25,10 @@
     "eslint-plugin-vue": "^10.6.2",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "vite": "^7.2.4"
+  },
+  "lint-staged":{
+    "*.{js,vue}": "npm run lint"
   }
 }
