@@ -1,20 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
 const routes = [{
-    path:'/',
-    redirect:'/dashboard'
+    path: '/',
+    redirect: '/dashboard'
 },
 {
-    path:'/dashboard',
+    path: '/dashboard',
     name: 'Dashboard',
-    component: ()=> import('../components/Movies/MoviesList.vue')
+    component: () => import('../components/Movies/MoviesList.vue')
 },
 {
-    path:'/movieDetails',
+    path: '/movieDetails',
     name: 'MovieDetails',
-    component: ()=> import('../components/Movies/MovieDetails.vue'),
+    component: () => import('../components/Movies/MovieDetails.vue'),
 },
 {
-    path:'/:pathMatch(.*)*',
+    path: '/:pathMatch(.*)*',
     redirect: '/dashboard'
 }
 ]

@@ -5,13 +5,23 @@ import { computed, onBeforeMount, onBeforeUnmount } from 'vue';
 const router = useRouter();
 const store = useCommonStore();
 const activeRecord = computed(() => store.activeRecord)
-const themeName = computed(() => store.getThemeName)
 const rating = computed(() => {
     let val = 'NA';
     if (activeRecord.value?.rating && Object?.values(activeRecord.value.rating)?.length && Object.values(activeRecord.value?.rating)[0] !== null) {
         return `${Object.values(activeRecord.value?.rating)[0]}/10`
     }
     return val
+})
+const premiered = computed(() => new Date(activeRecord.value.premiered)?.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+}))
+const runTime = computed(() => {
+    let time = Number(((activeRecord.value?.runtime || 0) / 60)?.toFixed(2));
+    if (time)
+        return time > 1 ? `${time} hrs` : `${time} hr`;
+    else return 'NA'
 })
 onBeforeMount(() => {
     if (!Object.keys(activeRecord.value)?.length)
@@ -22,98 +32,77 @@ onBeforeUnmount(() => {
 })
 </script>
 <template>
-    <!-- <button class="btnStyles goBackBtn" title="Go to dashboard" @click="router.back()">
-        <svg xmlns="http://www.w3.org/2000/svg" stroke='var(--text-color)' width="20px" height="20px"
-            viewBox="0 0 24 24" fill="none">
-            <g id="SVGRepo_bgCarrier" stroke-width="0" />
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
-            <g id="SVGRepo_iconCarrier">
-                <path d="M22 22L2 22" stroke="inherit" stroke-width="1.5" stroke-linecap="round" />
-                <path
-                    d="M2 11L6.06296 7.74968M22 11L13.8741 4.49931C12.7784 3.62279 11.2216 3.62279 10.1259 4.49931L9.34398 5.12486"
-                    stroke="inherit" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M15.5 5.5V3.5C15.5 3.22386 15.7239 3 16 3H18.5C18.7761 3 19 3.22386 19 3.5V8.5"
-                    stroke="inherit" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M4 22V9.5" stroke="inherit" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M20 9.5V13.5M20 22V17.5" stroke="inherit" stroke-width="1.5" stroke-linecap="round" />
-                <path
-                    d="M15 22V17C15 15.5858 15 14.8787 14.5607 14.4393C14.1213 14 13.4142 14 12 14C10.5858 14 9.87868 14 9.43934 14.4393M9 22V17"
-                    stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M14 9.5C14 10.6046 13.1046 11.5 12 11.5C10.8954 11.5 10 10.6046 10 9.5C10 8.39543 10.8954 7.5 12 7.5C13.1046 7.5 14 8.39543 14 9.5Z"
-                    stroke="inherit" stroke-width="1.5" />
-            </g>
-        </svg>
-    </button> -->
-        <section class="movieDetailsCard pt-10">
-            <img class="currentImage bgImageStyles imageBg"
-                 :src="activeRecord.image?.medium"
-                :alt="activeRecord?.name" />
-            <div class="movieContent">
-                <h3 class="name">{{ activeRecord?.name }}</h3>
-                <div class="genres" v-if="activeRecord?.genres?.length"><small class="genreName"
-                        v-for="genre of activeRecord?.genres" :key="genre">{{ genre }}</small></div>
-                <div class="pt-10"><small>Duration - <strong>{{ activeRecord?.runtime / 60 > 1 ?
-                    `${activeRecord?.runtime / 60} hrs` : `${activeRecord?.runtime / 60} hr` }}</strong></small>
+    <section class="movieDetailsCard">
+        <div>
+            <h3 class="name">{{ activeRecord?.name }}</h3>
+            <div class="genres" v-if="activeRecord?.genres?.length"><span class="genreName"
+                    v-for="genre of activeRecord?.genres" :key="genre">{{ genre }}</span></div>
+
+        </div>
+        <img class="currentImage bgImageStyles imageBg" :src="activeRecord.image?.medium" :alt="activeRecord?.name" />
+        <div class="movieContent">
+            <div class="moreDetails">
+                <div> <span>Country - <strong>{{ activeRecord?.network?.country?.name }}</strong></span></div>
+                <div><span>Language - <strong>{{ activeRecord?.language }}</strong></span></div>
+
+                <div v-if="activeRecord?.premiered">Premiered - <strong>{{ premiered }}</strong></div>
+                <div><span>Duration - <strong>{{ runTime }}</strong></span>
                 </div>
-                <div><small>Language - <strong>{{ activeRecord?.language }}</strong></small></div>
-                <div> <small class="movieRating">Rating - <strong>{{ rating }}</strong></small></div>
-                <div> <small>Country - <strong>{{ activeRecord?.network?.country?.name }}</strong></small></div>
-                <p class='summary' v-html="activeRecord?.summary"></p>
+                <div> <span class="movieRating">Rating - <strong>{{ rating }}</strong></span></div>
             </div>
-        </section>
+            <p class='summary' v-html="activeRecord?.summary"></p>
+        </div>
+    </section>
 </template>
 <style scoped>
-small {
-    font-size: medium;
+.moreDetails {
+    background: var(--fields-bg);
+    padding: 10px;
+    border-radius: 10px;
+    width: fit-content;
 }
 
 .summary {
     font-size: medium;
-    margin-bottom: 5px;
-}
-
-.pt-10 {
-    padding-top: 10px;
-}
-
-.goBackBtn {
-    margin-block: 7px !important
+    margin: 0px;
+    padding: 10px;
+    background: var(--fields-bg);
+    border-radius: 10px;
 }
 
 .movieDetailsCard {
-    display: flex;
-    gap: 15%;
-    margin-inline: 20%;
+    margin-inline: 10%;
     margin-top: 40px;
+    padding-block: 10px;
 }
 
 .movieContent {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+    padding-right: 30px;
 }
 
 .name {
     margin: 0;
+    color: var(--active-color);
 }
 
 .genres {
     display: flex;
     flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 5px;
 }
 
 .genreName {
-    padding-inline: 10px;
-    border-right: 1px solid var(--border-color);
-}
-
-.genreName:first-child {
-    padding-left: 0px !important;
-}
-
-.genreName:last-child {
-    border: none;
+    padding: 5px 10px;
+    border-radius: 30px;
+    background-color: var(--fields-bg);
+    font-size: smaller;
+    font-weight: 500;
 }
 
 .currentImage {
@@ -124,20 +113,31 @@ small {
     min-width: 200px;
     min-height: 300px;
     object-fit: fill;
+    float: right;
+    margin-top: 10px;
+    /* box-shadow: 0px 0px 15px 4px var(--active-color), 0px 0px 10px 2px var(--active-color); */
 }
 
-@media screen and (min-width: 600px) and (max-width: 900px) {
+@media screen and (max-width: 700px) {
     .movieDetailsCard {
-        margin-inline: 0px;
-        gap: 10%;
+        margin: 0px;
+    }
+
+    .currentImage {
+        float: none;
+    }
+
+    .movieContent {
+        padding-right: 0px;
     }
 }
 
-@media screen and (max-width: 599px) {
-    .movieDetailsCard {
-        flex-wrap: wrap;
-        gap: 10px;
-        margin: 0px;
+@media screen and (max-width: 350px) {
+    .currentImage {
+        width: 100%;
+        height: auto;
+        min-width: auto;
+        min-height: auto;
     }
 }
 </style>

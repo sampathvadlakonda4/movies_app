@@ -6,7 +6,7 @@ const fetchMoviesList = async () => {
         return getData?.data || [];
     }
     catch (err) {
-        console.error('Error in tvmaze api',err);
+        console.error('Error in tvmaze api', err);
     }
 };
 export {

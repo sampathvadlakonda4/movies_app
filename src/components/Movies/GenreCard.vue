@@ -7,7 +7,7 @@ const router = useRouter();
 const props = defineProps({
     genreItems: {
         type: Object,
-        default: {},
+        default: ()=> {},
     },
     genreName: {
         type: String,
@@ -26,29 +26,29 @@ function setClickedRecord(item) {
     store.setActiveRecord(item);
     router.push({ name: 'MovieDetails' })
 }
-function onScroll(e){
+function onScroll(e) {
     let element = e.target;
-    if(element.scrollLeft > 0){
+    if (element.scrollLeft > 0) {
         showLeftArrow.value = true;
     }
-    else{
+    else {
         showLeftArrow.value = false;
     }
-    if(element.scrollWidth === element.scrollLeft + moviesMainContainer.value?.clientWidth){
+    if (element.scrollWidth - 1 <= element.scrollLeft + moviesMainContainer.value?.clientWidth) {
         showRightArrow.value = false;
     }
-    else{
+    else {
         showRightArrow.value = true;
     }
 }
-function scrollBy(side){
+function scrollBy(side) {
     movieCardContainer.value.scrollBy({
         left: side * moviesMainContainer.value?.clientWidth,
         behavior: 'smooth'
     })
 }
-onMounted(()=>{
-    if(movieCardContainer.value.scrollWidth > moviesMainContainer.value?.clientWidth){
+onMounted(() => {
+    if (movieCardContainer.value.scrollWidth > moviesMainContainer.value?.clientWidth) {
         showRightArrow.value = true;
     }
 })
@@ -94,7 +94,6 @@ onMounted(()=>{
 
 .listHeading {
     margin: 0px;
-    /* border-bottom: 3px solid var(--active-color); */
     width: fit-content;
     font-size: 1.2rem;
     font-weight: 600;
@@ -124,6 +123,7 @@ onMounted(()=>{
     transform: translateY(-50%);
     z-index: 1;
     backdrop-filter: blur(5px);
+    box-shadow: 0px 0px 10px -1px var(--active-color);
 }
 
 .leftBtn {
