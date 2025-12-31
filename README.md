@@ -21,9 +21,10 @@
 5) User friendly - displayed proper prompts where required.
 6) Handled api calls effectively.
 7) Data persisting.
+8) Eslint with husky to check staged files only to maintain code quality.
 
 # Tested - Unit Test Cases
-1) On first load of the application, a skeleton loader is displayed while data is fetching from 'https://api.tvmaze.com/shows' get-api. Fetching the data only once then stored it in the pinia and persisted for future use. if data already exists in pinia store then not fetching the data again from api.
+1) On first load of the application, redirected to dashboard page, a skeleton loader is displayed while data is fetching from 'https://api.tvmaze.com/shows' get-api. Fetching the data only once then stored it in the pinia and persisted for future use. if data already exists in pinia store then not fetching the data again from api.
 2) skeleton loader's number of cards and genres are dynamically calculated according to window size.
 3) After fetching data, loader is hidden and data started loading. If the data is empty then on UI displayed prompt.
 4) In place of the movies poster, user can able to see the movie icon as the initial image, once the original image is loaded then it will be placed.

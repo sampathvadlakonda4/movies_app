@@ -23,9 +23,9 @@
 
 <script setup>
 import { onMounted } from 'vue';
-import { fetchMoviesList } from './services';
-import useCommonStore from './store/commonStore';
-import Header from './components/Header/HeaderComponent.vue';
+import { fetchMoviesList } from '@/services';
+import useCommonStore from '@/store/commonStore';
+import Header from '@/components/Header/HeaderComponent.vue';
 
 const store = useCommonStore();
 onMounted(async () => {

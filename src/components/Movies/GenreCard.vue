@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
-import useCommonStore from '../../store/commonStore';
+import useCommonStore from '@/store/commonStore';
 const store = useCommonStore();
 const router = useRouter();
 const props = defineProps({

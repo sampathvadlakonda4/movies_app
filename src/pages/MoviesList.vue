@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from 'vue';
-import useCommonStore from '../../store/commonStore';
-import GenreCard from './GenreCard.vue';
-import MoviesListLoader from '../Loaders/MoviesListLoader.vue';
+import useCommonStore from '@/store/commonStore';
+import GenreCard from '@/components/Movies/GenreCard.vue';
+import MoviesListLoader from '@/components/Loaders/MoviesListLoader.vue';
 const store = useCommonStore();
 const itemsGroupByGenre = computed(() => store.visibleItems || {});
 const searchText = computed(() => store.getSearchText?.trim().toLowerCase());

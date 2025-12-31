@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import useCommonStore from '../../store/commonStore';
+import useCommonStore from '@/store/commonStore';
 import { computed, onBeforeMount, onBeforeUnmount } from 'vue';
 const router = useRouter();
 const store = useCommonStore();

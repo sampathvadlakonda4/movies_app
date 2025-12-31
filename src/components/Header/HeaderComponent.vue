@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import useCommonStore from '../../store/commonStore';
+import useCommonStore from '@/store/commonStore';
 const store = useCommonStore();
 const route = useRoute();
 const themeDetails = {

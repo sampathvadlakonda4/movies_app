@@ -6,12 +6,12 @@ const routes = [{
 {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import('../components/Movies/MoviesList.vue')
+    component: () => import('@/pages/MoviesList.vue')
 },
 {
     path: '/movieDetails',
     name: 'MovieDetails',
-    component: () => import('../components/Movies/MovieDetails.vue'),
+    component: () => import('@/pages/MovieDetails.vue'),
 },
 {
     path: '/:pathMatch(.*)*',
