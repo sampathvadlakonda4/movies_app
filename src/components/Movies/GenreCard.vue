@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router';
 import useCommonStore from '@/store/commonStore';
 const store = useCommonStore();
@@ -7,7 +7,7 @@ const router = useRouter();
 const props = defineProps({
     genreItems: {
         type: Object,
-        default: ()=> {},
+        default: () => { },
     },
     genreName: {
         type: String,
@@ -19,6 +19,7 @@ const moviesMainContainer = ref();
 const showLeftArrow = ref(false);
 const showRightArrow = ref(false);
 const searchText = computed(() => store.getSearchText?.trim().toLowerCase());
+let toUpdateArrowsOnsearch = debounce(onScroll, 100)
 function isExisted(item) {
     return searchText.value ? item?.name?.toLowerCase().includes(searchText.value) : true;
 }
@@ -26,20 +27,15 @@ function setClickedRecord(item) {
     store.setActiveRecord(item);
     router.push({ name: 'MovieDetails' })
 }
-function onScroll(e) {
-    let element = e.target;
-    if (element.scrollLeft > 0) {
-        showLeftArrow.value = true;
-    }
-    else {
-        showLeftArrow.value = false;
-    }
+function onScroll() {
+    let element = movieCardContainer.value;
+    if (element.scrollLeft > 0) showLeftArrow.value = true;
+    else showLeftArrow.value = false;
+
     if (element.scrollWidth - 1 <= element.scrollLeft + moviesMainContainer.value?.clientWidth) {
         showRightArrow.value = false;
     }
-    else {
-        showRightArrow.value = true;
-    }
+    else showRightArrow.value = true;
 }
 function scrollBy(side) {
     movieCardContainer.value.scrollBy({
@@ -47,11 +43,20 @@ function scrollBy(side) {
         behavior: 'smooth'
     })
 }
+function debounce(fn, timer){
+    let toClear = null;
+    return function(){
+        if(toClear) clearTimeout(toClear);
+        toClear = setTimeout(fn, timer);
+    }
+}
 onMounted(() => {
     if (movieCardContainer.value.scrollWidth > moviesMainContainer.value?.clientWidth) {
         showRightArrow.value = true;
     }
 })
+// TO TOGGLE THE ARROW BUTTONS ON CHANGE OF SEARCHED TEXT
+watch(()=> searchText.value, toUpdateArrowsOnsearch)
 </script>
 <template>
     <div>
@@ -155,7 +160,7 @@ onMounted(() => {
 }
 
 .detailsContainer {
-    line-height: 1.2;
+    line-height: 1.25;
 }
 
 .movieName {
@@ -163,7 +168,7 @@ onMounted(() => {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    font-size: 0.8rem;
+    font-size: 14px;
     font-weight: 600;
 }
 
