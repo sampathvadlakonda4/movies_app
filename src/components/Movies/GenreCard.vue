@@ -82,17 +82,23 @@ watch(() => searchText.value, () => {
             <!-- Movie card -->
             <div class="movieCard" v-for="item of props?.genreItems" :key="item?.id" v-show="isExisted(item)"
                 @click="setClickedRecord(item)">
-                <img class="movieImage bgImageStyles imageBg" :src="item?.image?.original" :alt='item?.name'
-                    loading="lazy" />
-                <div class="detailsContainer" :title="item?.name">
-                    <p class="movieName">{{ item?.name }}</p>
-                    <small class="movieRating">Rating: {{ rating(item) }}</small>
-                </div>
+                <figure>
+                    <img class="movieImage bgImageStyles imageBg" :src="item?.image?.original" :alt='item?.name'
+                        loading="lazy" />
+                    <figcaption class="detailsContainer" :title="item?.name">
+                        <p class="movieName">{{ item?.name }}</p>
+                        <small class="movieRating">Rating: {{ rating(item) }}</small>
+                    </figcaption>
+                </figure>
             </div>
         </section>
     </div>
 </template>
 <style scoped>
+figure {
+    margin: 0;
+}
+
 .moviesCardMainContainer {
     position: relative;
 }
