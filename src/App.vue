@@ -1,26 +1,3 @@
-<!--
-// theme
-// responsive
-// Added skeleton loader
-// pinia
-// persisted state based in sessionStorage
-// if No content on searching text then showing text on screen
-// if had content initially then only showing search
-// added initial movie png to display while images are loading 
-// if data existed in pinia then not calling api again
-// hidden search field if current route is movieDetails, because no need of search in it
-// insted of clicking on movie name, if opens movieDetails route directly or manually then redirecting to dashboard
-// if route path not matches then redirecting to dashboard
-
-
-// light- #3F51B5, dark - cyan
-// improving scrollbars
-// loader has to manage according to api call
-
-
-// semantic, unit, debounce, linting, error handling...
--->
-
 <script setup>
 import { onMounted } from 'vue';
 import { fetchMoviesList } from '@/services';
