@@ -21,13 +21,13 @@ onUnmounted(() => {
     <section class="loaderContainer">
         <div v-for="genre in numberOfGenres" :key="genre" class="genre" :class="genre === 1 ? 'mt-20' : 'mt-50'">
             <div class="heading borderRadius-30 bgColor animate-loader"></div>
-            <div class="cardsContainer">
+            <section class="cardsContainer">
                 <div class="card" v-for="card in numberOfCards" :key="card">
                     <div class="imageContainer bgColor animate-loader"></div>
                     <div class="nameOfMovie mt-10 borderRadius-30 bgColor animate-loader"></div>
                     <div class="rating mt-10 borderRadius-30 bgColor animate-loader"></div>
                 </div>
-            </div>
+            </section>
         </div>
     </section>
 </template>

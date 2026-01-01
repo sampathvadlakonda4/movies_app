@@ -78,7 +78,7 @@ watch(() => searchText.value, () => {
                     stroke-linejoin="round" />
             </svg>
         </button>
-        <div class="moviesCardContainer" ref="movieCardContainer" @scroll="onScroll">
+        <section class="moviesCardContainer" ref="movieCardContainer" @scroll="onScroll">
             <!-- Movie card -->
             <div class="movieCard" v-for="item of props?.genreItems" :key="item?.id" v-show="isExisted(item)"
                 @click="setClickedRecord(item)">
@@ -89,7 +89,7 @@ watch(() => searchText.value, () => {
                     <small class="movieRating">Rating: {{ rating(item) }}</small>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 <style scoped>

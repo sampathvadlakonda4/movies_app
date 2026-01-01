@@ -23,10 +23,10 @@ const isNoMatchFoundInAllGenres = computed(() => {
 <template>
     <section class="moviesListContainer">
         <!-- Genres -->
-        <div v-for="(genreItems, genreName) in itemsGroupByGenre" :key="genreName" class="genre"
+        <section v-for="(genreItems, genreName) in itemsGroupByGenre" :key="genreName" class="genre"
             v-show="hasItems(genreItems)">
             <GenreCard :genreItems="genreItems" :genreName="genreName" />
-        </div>
+        </section>
         <!-- After searching if not found any records then to display text on screen  -->
         <div class="noContent" v-if="isNoMatchFoundInAllGenres">
             <svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" viewBox="0 -0.5 25 25" fill="none">

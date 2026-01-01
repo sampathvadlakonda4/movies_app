@@ -16,7 +16,7 @@
 
 # Features
 1) Responsive single page movies application.
-2) Movie search functionality that allows users to search movies by name. Implemented effectively without need of debouncing.
+2) Movie search functionality that allows users to search movies by name. Implemented search effectively without need of debouncing.
 3) Theme Support with two modes - dark and light. default is dark.
 4) Dynamic skeleton loader.
 5) User friendly - displayed proper prompts where required.
@@ -45,7 +45,7 @@
 
 10) Theme switching button which placed in header is working fine. default theme is dark.
 
-11) If current theme is light, then after page reload light theme styles are applied.
+11) If current theme is light, then after page reload also light theme styles are applied.
 
 12) Arrow buttons of genres, Left arrow button is shown up only if had something to scroll on to left side, otherwise hidden.
 

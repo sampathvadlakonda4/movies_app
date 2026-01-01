@@ -28,7 +28,7 @@ onBeforeUnmount(() => {
 })
 </script>
 <template>
-    <section class="movieDetailsCard">
+    <article class="movieDetailsCard">
         <div>
             <h3 class="name">{{ activeRecord?.name }}</h3>
             <div class="genres" v-if="activeRecord?.genres?.length"><span class="genreName"
@@ -48,7 +48,7 @@ onBeforeUnmount(() => {
             </div>
             <p class='summary' v-html="activeRecord?.summary"></p>
         </div>
-    </section>
+    </article>
 </template>
 <style scoped>
 .moreDetails {
