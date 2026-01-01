@@ -1,7 +1,7 @@
 <script setup>
-import {computed} from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import useCommonStore from '../../store/commonStore';
+import useCommonStore from '@/store/commonStore';
 const store = useCommonStore();
 const route = useRoute();
 const themeDetails = {
@@ -12,7 +12,7 @@ const themeDetails = {
     '--header-box-shadow': { dark: '#ffffff2e', light: '#0000002e' },
     '--active-color': { dark: '#00b8ad', light: '#2e43b8' },
 }
-const themeName = computed(()=> store?.getThemeName);
+const themeName = computed(() => store?.getThemeName);
 const visibleItems = computed(() => store?.visibleItems || {})
 const searchText = computed(() => store.getSearchText);
 function setValues(rootElement) {
@@ -22,23 +22,28 @@ function setValues(rootElement) {
 }
 function toggleTheme() {
     let rootElement = document.documentElement;
-    if (themeName.value === 'dark') {
-        store.setThemeName('light');
-        setValues(rootElement);
-    }
-    else {
-        store.setThemeName('dark');
-        setValues(rootElement);
+    if (rootElement) {
+        if (themeName.value === 'dark') {
+            store.setThemeName('light');
+            setValues(rootElement);
+        }
+        else {
+            store.setThemeName('dark');
+            setValues(rootElement);
+        }
     }
 }
 function onSearchInput(e) {
-    store.setSearchText(e.target.value);
+    if (e?.target) store.setSearchText(e.target.value);
 }
+onMounted(() => {
+    if (themeName.value === 'light') setValues(document.documentElement);;
+})
 </script>
 <template>
     <header class="pad-lr-1">
         <svg class="svgLogo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-            id="_x32_" width="40px" height="40px" viewBox="0 0 512 512" xml:space="preserve" fill="var(--active-color)">
+            id="_x32_" viewBox="0 0 512 512" xml:space="preserve" fill="var(--active-color)">
             <g>
                 <path class="st0" fill="inherit"
                     d="M289.375,40.703c-40.906,0-76.25,23.781-93,58.266c-16.75-34.484-52.109-58.266-93.016-58.266   C46.266,40.703,0,86.969,0,144.063c0,57.078,46.266,103.328,103.359,103.328h186.016c57.094,0,103.359-46.25,103.359-103.328   C392.734,86.969,346.469,40.703,289.375,40.703z M103.359,183.141c-21.594,0-39.094-17.516-39.094-39.078   c0-21.594,17.5-39.094,39.094-39.094c21.563,0,39.063,17.5,39.063,39.094C142.422,165.625,124.922,183.141,103.359,183.141z    M289.375,183.141c-21.578,0-39.063-17.516-39.063-39.078c0-21.594,17.484-39.094,39.063-39.094   c21.594,0,39.094,17.5,39.094,39.094C328.469,165.625,310.969,183.141,289.375,183.141z" />
@@ -106,6 +111,9 @@ header {
 
 .svgLogo {
     margin-right: 10px;
+    min-width: 35px;
+    width: 35px;
+    height: 35px;
 }
 
 .searchContainer {
@@ -121,7 +129,7 @@ header {
 }
 
 .searchIcon {
-    padding: 0 7px;
+    margin: 0 7px;
 }
 
 .searchField {

@@ -1,7 +1,7 @@
 <!--
 // theme
 // responsive
-// loader
+// Added skeleton loader
 // pinia
 // persisted state based in sessionStorage
 // if No content on searching text then showing text on screen
@@ -16,20 +16,23 @@
 // light- #3F51B5, dark - cyan
 // improving scrollbars
 // loader has to manage according to api call
+
+
+// semantic, unit, debounce, linting, error handling...
 -->
 
 <script setup>
 import { onMounted } from 'vue';
-import { fetchMoviesList } from './services';
-import useCommonStore from './store/commonStore';
-import Header from './components/Header/Header.vue';
+import { fetchMoviesList } from '@/services';
+import useCommonStore from '@/store/commonStore';
+import Header from '@/components/Header/HeaderComponent.vue';
 
 const store = useCommonStore();
 onMounted(async () => {
-  if(!store?.moviesList?.length){
+  if (!store?.moviesList?.length) {
     store.setLoader(true);
     let data = await fetchMoviesList();
-    if(data) store.assignData(data);
+    if (data) store.assignData(data);
     store.setLoader(false);
   }
 })

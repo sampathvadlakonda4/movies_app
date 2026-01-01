@@ -1,13 +1,15 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router';
-import useCommonStore from '../../store/commonStore';
+import useCommonStore from '@/store/commonStore';
+import { useLogic } from '@/composables/commonLogic'
+const { ratingCheck } = useLogic();
 const store = useCommonStore();
 const router = useRouter();
 const props = defineProps({
     genreItems: {
         type: Object,
-        default: {},
+        default: () => { },
     },
     genreName: {
         type: String,
@@ -26,31 +28,36 @@ function setClickedRecord(item) {
     store.setActiveRecord(item);
     router.push({ name: 'MovieDetails' })
 }
-function onScroll(e){
-    let element = e.target;
-    if(element.scrollLeft > 0){
-        showLeftArrow.value = true;
-    }
-    else{
-        showLeftArrow.value = false;
-    }
-    if(element.scrollWidth === element.scrollLeft + moviesMainContainer.value?.clientWidth){
+function onScroll() {
+    let element = movieCardContainer.value;
+    if (!element) return false;
+    if (element.scrollLeft > 0) showLeftArrow.value = true;
+    else showLeftArrow.value = false;
+
+    if (element.scrollWidth - 1 <= element.scrollLeft + moviesMainContainer.value?.clientWidth) {
         showRightArrow.value = false;
     }
-    else{
-        showRightArrow.value = true;
-    }
+    else showRightArrow.value = true;
 }
-function scrollBy(side){
+function scrollBy(side) {
     movieCardContainer.value.scrollBy({
         left: side * moviesMainContainer.value?.clientWidth,
         behavior: 'smooth'
     })
 }
-onMounted(()=>{
-    if(movieCardContainer.value.scrollWidth > moviesMainContainer.value?.clientWidth){
+function rating(item) {
+    return ratingCheck(item) ? `${Object.values(item.rating)[0]}/10` : 'NA';
+}
+onMounted(() => {
+    if (movieCardContainer.value && movieCardContainer.value.scrollWidth > moviesMainContainer.value?.clientWidth) {
         showRightArrow.value = true;
     }
+})
+// TO TOGGLE THE ARROW BUTTONS ON CHANGE OF SEARCHED TEXT
+watch(() => searchText.value, () => {
+    nextTick(() => {
+        onScroll();
+    })
 })
 </script>
 <template>
@@ -71,7 +78,7 @@ onMounted(()=>{
                     stroke-linejoin="round" />
             </svg>
         </button>
-        <div class="moviesCardContainer" ref="movieCardContainer" @scroll="onScroll">
+        <section class="moviesCardContainer" ref="movieCardContainer" @scroll="onScroll">
             <!-- Movie card -->
             <div class="movieCard" v-for="item of props?.genreItems" :key="item?.id" v-show="isExisted(item)"
                 @click="setClickedRecord(item)">
@@ -79,12 +86,10 @@ onMounted(()=>{
                     loading="lazy" />
                 <div class="detailsContainer" :title="item?.name">
                     <p class="movieName">{{ item?.name }}</p>
-                    <small class="movieRating">Rating: {{ Object?.values(item.rating)?.length &&
-                        Object.values(item.rating)[0] !== null ?
-                        `${Object.values(item.rating)[0]}/10` : 'NA' }}</small>
+                    <small class="movieRating">Rating: {{ rating(item) }}</small>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 <style scoped>
@@ -94,7 +99,6 @@ onMounted(()=>{
 
 .listHeading {
     margin: 0px;
-    /* border-bottom: 3px solid var(--active-color); */
     width: fit-content;
     font-size: 1.2rem;
     font-weight: 600;
@@ -124,6 +128,7 @@ onMounted(()=>{
     transform: translateY(-50%);
     z-index: 1;
     backdrop-filter: blur(5px);
+    box-shadow: 0px 0px 10px -1px var(--active-color);
 }
 
 .leftBtn {
@@ -155,7 +160,7 @@ onMounted(()=>{
 }
 
 .detailsContainer {
-    line-height: 1.2;
+    line-height: 1.25;
 }
 
 .movieName {
@@ -163,7 +168,7 @@ onMounted(()=>{
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    font-size: 0.8rem;
+    font-size: 14px;
     font-weight: 600;
 }
 

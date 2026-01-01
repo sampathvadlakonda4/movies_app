@@ -11,7 +11,6 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* dark theme */
-  /* --body-bg-color: #242424; */
   --body-bg-color: #0f1014;
   --text-color: rgba(255, 255, 255, 0.87);
   --border-color: grey;
@@ -20,32 +19,42 @@
   --active-color: #00b8ad;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
   background-color: var(--body-bg-color);
   color: var(--text-color);
   scrollbar-width: thin;
-  scrollbar-color: var(--active-color) var(--fields-bg); 
+  scrollbar-color: var(--active-color) var(--fields-bg);
   scrollbar-gutter: stable;
 }
+
 ::-webkit-scrollbar {
   width: 12px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--fields-bg);
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: var(--active-color);
   border-radius: 6px;
   border: 3px solid var(--fields-bg);
 }
+
 .moviesCardContainer::-webkit-scrollbar {
   display: none;
 }
-.moviesCardContainer{
+
+.moviesCardContainer {
   scrollbar-width: none;
 }
+
 .pad-lr-1 {
   padding: 0 1rem;
 }
@@ -63,7 +72,7 @@ body {
 }
 
 .imageBg {
-  background-image: url('/public/movie.png');
+  background-image: url('/movie.png');
 }
 
 .bgImageStyles {
@@ -72,6 +81,11 @@ body {
   background-position: center;
   background-color: var(--fields-bg);
 }
-.activeColor{
+
+.activeColor {
   color: var(--active-color)
+}
+
+.summary>p {
+  margin: 0;
 }
