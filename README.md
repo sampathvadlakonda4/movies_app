@@ -16,7 +16,7 @@
 
 # Features
 1) Responsive single page movies application.
-2) Movie search functionality that allows users to search movies by name.
+2) Movie search functionality that allows users to search movies by name. Implemented effectively without need of debouncing.
 3) Theme Support with two modes - dark and light. default is dark.
 4) Dynamic skeleton loader.
 5) User friendly - displayed proper prompts where required.
@@ -60,4 +60,6 @@
 17) If manually enteres any un-matched route then redirected to dashboard page.
 
 18) If tries to open movieDetails route manually, then also redirecting to dashboard page.
+
+19) Responsiveness checked.
 

@@ -2,16 +2,12 @@
 import { useRouter } from 'vue-router';
 import useCommonStore from '@/store/commonStore';
 import { computed, onBeforeMount, onBeforeUnmount } from 'vue';
+import { useLogic } from '@/composables/commonLogic'
+const { ratingCheck } = useLogic();
 const router = useRouter();
 const store = useCommonStore();
 const activeRecord = computed(() => store.activeRecord)
-const rating = computed(() => {
-    let val = 'NA';
-    if (activeRecord.value?.rating && Object?.values(activeRecord.value.rating)?.length && Object.values(activeRecord.value?.rating)[0] !== null) {
-        return `${Object.values(activeRecord.value?.rating)[0]}/10`
-    }
-    return val
-})
+const rating = computed(() => ratingCheck(activeRecord.value) ? `${Object.values(activeRecord.value?.rating)[0]}/10` : 'NA')
 const premiered = computed(() => new Date(activeRecord.value.premiered)?.toLocaleString('en-US', {
     year: 'numeric',
     month: 'short',

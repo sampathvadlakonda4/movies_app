@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, computed } from 'vue';
+import { useLogic } from '@/composables/commonLogic'
+const { ratingCheck } = useLogic();
 const useCommonStore = defineStore('data', () => {
     const moviesList = ref([]);
     const searchText = ref('');
@@ -32,8 +34,8 @@ const useCommonStore = defineStore('data', () => {
     })
     const getSearchText = computed(() => searchText.value)
     const getIsLoader = computed(() => isLoader.value)
-    function rating(movie){
-        return movie?.rating ? Object.values(movie.rating)[0] : 0;
+    function rating(movie) {
+        return ratingCheck(movie) ? Object.values(movie.rating)[0] : 0;
     }
     function assignData(list) {
         moviesList.value = list;

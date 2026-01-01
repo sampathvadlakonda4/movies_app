@@ -1,7 +1,9 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router';
 import useCommonStore from '@/store/commonStore';
+import { useLogic } from '@/composables/commonLogic'
+const { ratingCheck } = useLogic();
 const store = useCommonStore();
 const router = useRouter();
 const props = defineProps({
@@ -19,7 +21,6 @@ const moviesMainContainer = ref();
 const showLeftArrow = ref(false);
 const showRightArrow = ref(false);
 const searchText = computed(() => store.getSearchText?.trim().toLowerCase());
-let toUpdateArrowsOnsearch = debounce(onScroll, 100)
 function isExisted(item) {
     return searchText.value ? item?.name?.toLowerCase().includes(searchText.value) : true;
 }
@@ -29,6 +30,7 @@ function setClickedRecord(item) {
 }
 function onScroll() {
     let element = movieCardContainer.value;
+    if (!element) return false;
     if (element.scrollLeft > 0) showLeftArrow.value = true;
     else showLeftArrow.value = false;
 
@@ -43,20 +45,20 @@ function scrollBy(side) {
         behavior: 'smooth'
     })
 }
-function debounce(fn, timer){
-    let toClear = null;
-    return function(){
-        if(toClear) clearTimeout(toClear);
-        toClear = setTimeout(fn, timer);
-    }
+function rating(item) {
+    return ratingCheck(item) ? `${Object.values(item.rating)[0]}/10` : 'NA';
 }
 onMounted(() => {
-    if (movieCardContainer.value.scrollWidth > moviesMainContainer.value?.clientWidth) {
+    if (movieCardContainer.value && movieCardContainer.value.scrollWidth > moviesMainContainer.value?.clientWidth) {
         showRightArrow.value = true;
     }
 })
 // TO TOGGLE THE ARROW BUTTONS ON CHANGE OF SEARCHED TEXT
-watch(()=> searchText.value, toUpdateArrowsOnsearch)
+watch(() => searchText.value, () => {
+    nextTick(() => {
+        onScroll();
+    })
+})
 </script>
 <template>
     <div>
@@ -84,9 +86,7 @@ watch(()=> searchText.value, toUpdateArrowsOnsearch)
                     loading="lazy" />
                 <div class="detailsContainer" :title="item?.name">
                     <p class="movieName">{{ item?.name }}</p>
-                    <small class="movieRating">Rating: {{ Object?.values(item.rating)?.length &&
-                        Object.values(item.rating)[0] !== null ?
-                        `${Object.values(item.rating)[0]}/10` : 'NA' }}</small>
+                    <small class="movieRating">Rating: {{ rating(item) }}</small>
                 </div>
             </div>
         </div>

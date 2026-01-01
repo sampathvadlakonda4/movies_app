@@ -22,17 +22,19 @@ function setValues(rootElement) {
 }
 function toggleTheme() {
     let rootElement = document.documentElement;
-    if (themeName.value === 'dark') {
-        store.setThemeName('light');
-        setValues(rootElement);
-    }
-    else {
-        store.setThemeName('dark');
-        setValues(rootElement);
+    if (rootElement) {
+        if (themeName.value === 'dark') {
+            store.setThemeName('light');
+            setValues(rootElement);
+        }
+        else {
+            store.setThemeName('dark');
+            setValues(rootElement);
+        }
     }
 }
 function onSearchInput(e) {
-    store.setSearchText(e.target.value);
+    if (e?.target) store.setSearchText(e.target.value);
 }
 onMounted(() => {
     if (themeName.value === 'light') setValues(document.documentElement);;
