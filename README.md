@@ -1,12 +1,13 @@
 # Frontend Technologies
-1) Node JS with npm - (version - 22.20.0)
-2) Vue JS- frontend framework.
-3) Vue-router - for routing.
-4) Pinia - to store the data.
-5) Pinia-plugin-persistedstate - to persist data.
-6) axios - to call the apis.
-7) eslist - to maintain code quality.
-8) husky & lint-staged - to check the errors of the staged files. 
+1) Node JS - (version - 22.20.0)
+2) NPM - (version - 10.9.3)
+3) Vue JS- frontend framework.
+4) Vue-router - for routing.
+5) Pinia - to store the data.
+6) Pinia-plugin-persistedstate - to persist data.
+7) axios - to call the apis.
+8) eslist - to maintain code quality.
+9) husky & lint-staged - to check the errors of the staged files. 
 
 # Instructions to run the application
 1) Install the Node JS.
